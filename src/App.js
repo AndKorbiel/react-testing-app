@@ -1,25 +1,53 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import Cart from './components/Cart';
+import Loader from './components/Loader';
+import ServicesList from './components/ServiceList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    showCart: false,
+    isLoading: true,
+    servicesList: [
+      { name: 'Service A' },
+      { name: 'Service B' }
+    ]
+  }
+
+  handleCartView = () => {
+    this.setState(state => ({
+      showCart: !state.showCart
+    }))
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        isLoading: false
+      })
+    }, 1000)
+  }
+
+  render() {
+    const showCart = this.state.showCart ? <Cart /> : '';
+
+    return (
+      <div className="App">
+        {this.state.isLoading ?
+          <Loader />
+          :
+          <>
+            {showCart}
+            <h1>Hello world</h1>
+            <br />
+            <ServicesList servicesList={this.state.servicesList} />
+            <br />
+            <button onClick={() => this.handleCartView()}>Show cart</button>
+          </>
+        }
+      </div>
+    );
+  }
 }
 
 export default App;
