@@ -9,3 +9,7 @@
   position: fixed;
   padding-top: 300px;
 }
+
+.service {
+  border: 1px solid #dbdbdb;
+}
