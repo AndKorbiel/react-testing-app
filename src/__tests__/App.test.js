@@ -2,21 +2,31 @@ import { render, screen, getByRole, fireEvent, queryByText, waitFor } from '@tes
 import App from '../App';
 import {ServiceList} from '../components/ServiceList'
 import React from "react";
+import {Provider} from "react-redux";
+import {store} from '../redux/store';
+
+const renderApp = () => {
+  render(
+      <Provider store={store}>
+        <App/>
+      </Provider>
+  )
+}
 
 test('renders loader by default', () => {
-  render(<App />);
+  renderApp()
   const linkElement = screen.getByText(/Loading.../i);
   expect(linkElement).toBeInTheDocument();
 });
 
 test('by default is not showing cart', () => {
-  render(<App />);
+  renderApp()
   const cart = screen.queryByText(/Your cart/i);
   expect(cart).toBeNull();
 })
 
 test('is showing cart once cart button is clicked', async () => {
-  render(<App />)
+  renderApp()
   // need to use query instead of getBy or const = ... to make it works
   await waitFor(() => expect(screen.queryByRole('button', { name: 'Show cart' })).toBeInTheDocument());
 
@@ -27,7 +37,7 @@ test('is showing cart once cart button is clicked', async () => {
 })
 
 it('changes number of items in cart after Order button is clicked', async () =>{
-  render(<App></App>)
+  renderApp()
   await waitFor(() => expect(screen.queryByRole('button', { name: 'Show cart' })).toBeInTheDocument());
   // testing badge's text to be equals 0
   expect(screen.queryByTestId('items-in-cart')).toHaveTextContent(/0/);
@@ -38,7 +48,7 @@ it('changes number of items in cart after Order button is clicked', async () =>{
 })
 
 it('removes product from list once remove button is clicked', async ()=>{
-  render(<App></App>)
+  renderApp()
   await waitFor(() => expect(screen.queryByRole('button', { name: 'Show cart' })).toBeInTheDocument());
   fireEvent.click(screen.queryAllByRole('button', {name: 'Order'})[0])
   expect(screen.queryByTestId('items-in-cart')).toHaveTextContent(/1/);

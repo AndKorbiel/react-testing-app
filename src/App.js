@@ -5,23 +5,12 @@ import Loader from './components/Loader';
 import ServicesList from './components/ServiceList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Badge, Container, Row, Col} from "react-bootstrap";
+import {connect} from "react-redux";
 
 class App extends React.Component {
   state = {
     showCart: false,
     isLoading: true,
-    servicesList: [
-      {
-        name: 'Test service A',
-        description: 'Description of Test service A',
-        price: 100
-      },
-      {
-        name: 'Test service B',
-        description: 'Description of Test service B',
-        price: 50
-      }
-    ],
     cart: []
   }
 
@@ -74,6 +63,7 @@ class App extends React.Component {
           :
             <Container>
               <Row>
+                <h1>{this.props.value}</h1>
                 <Col>
                   {showCart}
                 </Col>
@@ -82,7 +72,7 @@ class App extends React.Component {
                 <Col>
                   <h1>Hello world</h1>
                   <br />
-                  <ServicesList servicesList={this.state.servicesList} action={this.addToCart} />
+                  <ServicesList servicesList={this.props.servicesList} action={this.addToCart} />
                   <br />
                   <Button onClick={() => this.handleCartView()}>Show cart</Button>
                   <p>Items in cart: <Badge bg="secondary" data-testid="items-in-cart">{this.state.cart.length}</Badge></p>
@@ -95,4 +85,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    servicesList: state.servicesList
+  }
+}
+
+export default connect(mapStateToProps)(App);
