@@ -36,3 +36,15 @@ it('changes number of items in cart after Order button is clicked', async () =>{
   // testing if badge is showing increased value
   expect(screen.queryByTestId('items-in-cart')).toHaveTextContent(/1/);
 })
+
+it('removes product from list once remove button is clicked', async ()=>{
+  render(<App></App>)
+  await waitFor(() => expect(screen.queryByRole('button', { name: 'Show cart' })).toBeInTheDocument());
+  fireEvent.click(screen.queryAllByRole('button', {name: 'Order'})[0])
+  expect(screen.queryByTestId('items-in-cart')).toHaveTextContent(/1/);
+
+  fireEvent.click(screen.queryByRole('button', {name: /Show cart/i}));
+  fireEvent.click(screen.getByRole('button', {name: /X/i}))
+
+  expect(screen.queryByRole('cell')).not.toBeInTheDocument()
+})

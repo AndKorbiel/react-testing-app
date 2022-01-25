@@ -20,7 +20,7 @@ export default function Cart(props) {
                                 <td>{index + 1}</td>
                                 <td>{el.name}</td>
                                 <td>{el.price}</td>
-                                <td><Button variant="danger">X</Button></td>
+                                <td><Button variant="danger" onClick={() => props.remove(el, index)}>X</Button></td>
                             </tr>
                         )
                     })}

@@ -39,6 +39,17 @@ class App extends React.Component {
     })
   }
 
+  removeFromCart = (service, index) => {
+    const currentCart = this.state.cart;
+    const updatedCart = currentCart.filter((el, elIndex) => {
+      return elIndex !== index
+    })
+
+    this.setState({
+      cart: updatedCart
+    })
+  }
+
   componentDidMount() {
     setTimeout(() => {
       this.setState({
@@ -54,7 +65,7 @@ class App extends React.Component {
   }
 
   render() {
-    const showCart = this.state.showCart ? <Cart list={this.state.cart}/> : '';
+    const showCart = this.state.showCart ? <Cart list={this.state.cart} remove={this.removeFromCart} /> : '';
 
     return (
       <div className="App">
