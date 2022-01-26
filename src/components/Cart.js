@@ -16,7 +16,7 @@ export default function Cart(props) {
                 <tbody>
                     {props.list.map((el, index) => {
                         return(
-                            <tr>
+                            <tr key={index + 1}>
                                 <td>{index + 1}</td>
                                 <td>{el.name}</td>
                                 <td>{el.price}</td>

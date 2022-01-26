@@ -6,26 +6,18 @@ import ServicesList from './components/ServiceList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Badge, Container, Row, Col} from "react-bootstrap";
 import {connect} from "react-redux";
+import {addToCart, clearStore, removeFromCart} from "./redux/actions";
 
 class App extends React.Component {
   state = {
     showCart: false,
     isLoading: true,
-    cart: []
   }
 
   handleCartView = () => {
     this.setState(state => ({
       showCart: !state.showCart
     }))
-  }
-
-  addToCart = service => {
-    const currentCart = this.state.cart;
-    currentCart.push(service)
-    this.setState({
-      cart: currentCart
-    })
   }
 
   removeFromCart = (service, index) => {
@@ -48,13 +40,14 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
-    this.setState = state =>{
+    this.props.clearStore()
+    this.setState = () => {
       return
     }
   }
 
   render() {
-    const showCart = this.state.showCart ? <Cart list={this.state.cart} remove={this.removeFromCart} /> : '';
+    const showCart = this.state.showCart ? <Cart list={this.props.cart} remove={this.props.removeFromCart} /> : '';
 
     return (
       <div className="App">
@@ -72,10 +65,10 @@ class App extends React.Component {
                 <Col>
                   <h1>Hello world</h1>
                   <br />
-                  <ServicesList servicesList={this.props.servicesList} action={this.addToCart} />
+                  <ServicesList servicesList={this.props.servicesList} action={this.props.addToCart} />
                   <br />
                   <Button onClick={() => this.handleCartView()}>Show cart</Button>
-                  <p>Items in cart: <Badge bg="secondary" data-testid="items-in-cart">{this.state.cart.length}</Badge></p>
+                  <p>Items in cart: <Badge bg="secondary" data-testid="items-in-cart">{this.props.cart.length}</Badge></p>
                 </Col>
               </Row>
             </Container>
@@ -87,8 +80,17 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    servicesList: state.servicesList
+    servicesList: state.servicesList,
+    cart: state.cart
   }
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    addToCart: service => dispatch(addToCart(service)),
+    removeFromCart: (service, index) => dispatch(removeFromCart(service, index)),
+    clearStore: () => dispatch(clearStore())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
