@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot with props 1`] = `
+<div>
+  <h2>
+    Your cart
+  </h2>
+  <table
+    className="table table-striped table-bordered table-hover"
+  >
+    <thead>
+      <tr>
+        <th>
+          #
+        </th>
+        <th>
+          Service name
+        </th>
+        <th>
+          Price
+        </th>
+        <th />
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          1
+        </td>
+        <td>
+          Test service A
+        </td>
+        <td />
+        <td>
+          <button
+            className="btn btn-danger"
+            disabled={false}
+            onClick={[Function]}
+            type="button"
+          >
+            X
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          2
+        </td>
+        <td>
+          Test product B
+        </td>
+        <td />
+        <td>
+          <button
+            className="btn btn-danger"
+            disabled={false}
+            onClick={[Function]}
+            type="button"
+          >
+            X
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`matches snapshot without props 1`] = `
+<div>
+  <h2>
+    Your cart
+  </h2>
+</div>
+`;

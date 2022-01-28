@@ -46,7 +46,7 @@ it('changes number of items in cart after Order button is clicked', async () =>{
   expect(screen.queryByTestId('items-in-cart')).toHaveTextContent(/1/);
 })
 
-// Cleanup function only unmounts React trees that were mounted with render, but doesn't reset state from stores/reducers, so I have to remember to set clear store action in App.js
+// cleanup function only unmounts React trees that were mounted with render, but doesn't reset state from stores/reducers, so I have to remember to set clear store action in App.js
 it('removes product from list once remove button is clicked', async ()=>{
   renderApp()
   await waitFor(() => expect(screen.queryByRole('button', { name: 'Show cart' })).toBeInTheDocument());
@@ -59,3 +59,5 @@ it('removes product from list once remove button is clicked', async ()=>{
 
   expect(screen.queryByRole('cell')).not.toBeInTheDocument()
 })
+
+// snapshot test examples are in Cart.test.js
